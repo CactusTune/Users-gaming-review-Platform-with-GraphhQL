@@ -3,22 +3,25 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-      },
-    description: {
-        type: String,
-        required: true
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  genre: {
+    type: String,
+    required: true,
+  },
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
     },
-    genre: {
-        type: String,
-        required: true
-    },
-    reviews: [{
-      type: String,
-    }]
+  ],
 });
 
-const Game = mongoose.model('Game', gameSchema);
-export default Game
+const Game = mongoose.model("Game", gameSchema);
+export default Game;

@@ -1,29 +1,30 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { ApolloServer } from 'apollo-server-express';
-import mongoose, { Query } from 'mongoose'
-import { connectToMongo } from './src/Utils/db';
-import { typeDefs } from './src/graphql/typeDefs';
-import rootResolver from './src/graphql/resolvers';
-import jwt from 'jsonwebtoken'
+import express, { Request, Response, NextFunction } from "express";
+import { ApolloServer } from "apollo-server-express";
+import { connectToMongo } from "./src/Utils/db";
+import { typeDefs } from "./src/graphql/typeDefs";
+import rootResolver from "./src/graphql/resolvers";
+import rateLimit from "express-rate-limit";
+import jwt from "jsonwebtoken";
 
 async function bootstrap() {
-    const app = express();
+  const app = express();
 
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers: rootResolver,
-    })
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers: rootResolver,
+  });
 
-    await server.start()
+  await server.start();
 
-    server.applyMiddleware({app})
+  server.applyMiddleware({ app });
 
-    app.listen({ port: 4000 }, ()=> {
-        console.log(`App is listening on http://localhost:4000${server.graphqlPath}`)
-    })
+  app.listen({ port: 4040 }, () => {
+    console.log(
+      `App is listening on http://localhost:4040${server.graphqlPath}`
+    );
+  });
 
-    connectToMongo()
-
+  connectToMongo();
 }
 
-bootstrap()
+bootstrap();
