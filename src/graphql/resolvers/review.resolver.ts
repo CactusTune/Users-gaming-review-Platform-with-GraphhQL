@@ -1,11 +1,15 @@
 import Review from "../../models/review.model";
 import Game from "../../models/game.model";
 import User from "../../models/user.model";
+import { IResolvers } from "graphql-tools";
 
-const reviewResolvers = {
+const reviewResolvers: IResolvers = {
   Mutation: {
-    makeReview: async (_: any, { reviewInput }: any) => {
+    makeReview: async (_: any, { reviewInput }: any, { req }: any) => {
       try {
+        if (!req.isAuth) {
+          throw new Error("Unauthorized access. Please provide login.");
+        }
         const game = await Game.findById(reviewInput.gameId);
         const user = await User.findById(reviewInput.userId);
 

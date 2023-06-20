@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 class JwtToken {
   private readonly secretKey: string;
@@ -8,7 +8,7 @@ class JwtToken {
   }
 
   generateToken(userId: string): string {
-    const token = jwt.sign({ userId }, this.secretKey, { expiresIn: '1d' });
+    const token = jwt.sign({ userId }, this.secretKey, { expiresIn: "1d" });
     return token;
   }
 
@@ -17,7 +17,7 @@ class JwtToken {
       const decoded = jwt.verify(token, this.secretKey);
       return decoded;
     } catch (error) {
-      throw new Error('Invalid token');
+      throw new Error("Invalid token");
     }
   }
 }

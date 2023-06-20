@@ -1,6 +1,7 @@
 import Game from "../../models/game.model";
+import { IResolvers } from "graphql-tools";
 
-const gameResolvers = {
+const gameResolvers: IResolvers<any, any> = {
   Mutation: {
     createGame: async (_: any, { gameInput }: any) => {
       try {
@@ -23,7 +24,14 @@ const gameResolvers = {
   Query: {
     games: async (_: any) => {
       try {
-        const games = await Game.find();
+        const games = await Game.find().populate({
+          path: "reviews",
+          select: "comment rating",
+          populate: {
+            path: "user",
+            select: "name",
+          },
+        });
         if (!games) {
           throw new Error("Error fetching games");
         }

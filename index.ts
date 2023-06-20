@@ -1,17 +1,25 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, {
+  NextFunction,
+  Response,
+  Request,
+  request,
+  response,
+} from "express";
 import { ApolloServer } from "apollo-server-express";
 import { connectToMongo } from "./src/Utils/db";
 import { typeDefs } from "./src/graphql/typeDefs";
 import rootResolver from "./src/graphql/resolvers";
-import rateLimit from "express-rate-limit";
-import jwt from "jsonwebtoken";
+import authenticateToken from "./src/middleware/isAuth";
 
 async function bootstrap() {
   const app = express();
 
+  app.use(authenticateToken);
+
   const server = new ApolloServer({
     typeDefs,
     resolvers: rootResolver,
+    context: ({ req }) => ({ req }),
   });
 
   await server.start();

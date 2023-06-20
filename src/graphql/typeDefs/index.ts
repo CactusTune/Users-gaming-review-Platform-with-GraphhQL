@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
 export const typeDefs = gql`
   type Game {
@@ -53,22 +53,22 @@ export const typeDefs = gql`
     comment: String!
   }
 
+  type AuthData {
+    userId: ID!
+    token: String!
+    tokenExpiration: Int!
+  }
+
   type Query {
     games: [Game!]!
     reviews: [Review!]!
-    user(userId: String!): AuthData!
+    user(loginInput: LoginInput): AuthData!
+    login(loginInput: LoginInput): AuthData!
   }
 
   type Mutation {
     makeReview(reviewInput: ReviewInput): Review!
     createUser(userInput: UserInput): User
-    login(loginInput: LoginInput ): AuthData
     createGame(gameInput: GameInput): Game
   }
 `;
-
-// type AuthData {
-//   userId: ID!
-//   token: String!
-//   tokenExpiration: Int!
-// }
