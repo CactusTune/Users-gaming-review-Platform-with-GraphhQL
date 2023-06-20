@@ -10,9 +10,12 @@ import { connectToMongo } from "./src/Utils/db";
 import { typeDefs } from "./src/graphql/typeDefs";
 import rootResolver from "./src/graphql/resolvers";
 import authenticateToken from "./src/middleware/isAuth";
+import dotenv from "dotenv";
 
 async function bootstrap() {
   const app = express();
+
+  dotenv.config();
 
   app.use(authenticateToken);
 

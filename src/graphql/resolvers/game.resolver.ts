@@ -1,10 +1,12 @@
 import Game from "../../models/game.model";
 import { IResolvers } from "graphql-tools";
+import { validateGameInput } from "../../Utils/inputValidation";
 
 const gameResolvers: IResolvers<any, any> = {
   Mutation: {
     createGame: async (_: any, { gameInput }: any) => {
       try {
+        validateGameInput(gameInput);
         const existingGame = await Game.findOne({ title: gameInput.title });
         if (existingGame) {
           throw new Error("Game already exists.");

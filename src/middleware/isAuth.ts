@@ -29,7 +29,7 @@ const authenticateToken = (
   let decodedToken: any;
 
   try {
-    const jwtToken = new JwtToken("somesecret");
+    const jwtToken = new JwtToken(process.env.JWT_SECRET);
     decodedToken = jwtToken.verifyToken(token);
   } catch (err) {
     req.isAuth = false;

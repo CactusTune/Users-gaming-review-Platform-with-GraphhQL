@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 export async function connectToMongo() {
   mongoose
-    .connect(
-      `mongodb+srv://ojoshegun42:GDK6GorpLwYCJDs6@graphql.ajjlopq.mongodb.net/?retryWrites=true&w=majority`
-    )
+    .connect(process.env.MONGODB_URI || "")
     .then(() => {
       console.log("Db connected succesfully");
     })

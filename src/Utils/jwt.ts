@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 
 class JwtToken {
-  private readonly secretKey: string;
+  private readonly secretKey: any;
 
-  constructor(secretKey: string) {
+  constructor(secretKey: any) {
     this.secretKey = secretKey;
   }
 

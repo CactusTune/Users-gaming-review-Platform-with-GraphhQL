@@ -2,6 +2,10 @@ import bcrypt from "bcrypt";
 import User from "../../models/user.model";
 import JwtToken from "../../Utils/jwt";
 import { IResolvers } from "graphql-tools";
+import {
+  validateUserInput,
+  validateLoginInput,
+} from "../../Utils/inputValidation";
 
 interface UserInput {
   name: string;
@@ -13,6 +17,7 @@ const authResolvers: IResolvers = {
   Mutation: {
     createUser: async (_: any, { userInput }: any) => {
       try {
+        validateUserInput(userInput);
         const existingUser = await User.findOne({ email: userInput.email });
         if (existingUser) {
           throw new Error("User exists already.");
@@ -47,23 +52,31 @@ const authResolvers: IResolvers = {
       }
     },
     login: async (_: any, { loginInput }: any) => {
-      const user = await User.findOne({ email: loginInput.email });
+      try {
+        validateLoginInput(loginInput);
+        const user = await User.findOne({ email: loginInput.email });
 
-      if (!user) {
-        throw new Error("Invalid email or password");
+        if (!user) {
+          throw new Error("Invalid email or password");
+        }
+
+        const isMatch = await bcrypt.compare(
+          loginInput.password,
+          user.password
+        );
+
+        if (!isMatch) {
+          throw new Error("Invalid email or password");
+        }
+
+        const jwtToken = new JwtToken(process.env.JWT_SECRET);
+
+        const token = jwtToken.generateToken(user._id);
+
+        return { userId: user._id, token: token, tokenExpiration: 1 };
+      } catch (err) {
+        throw err;
       }
-
-      const isMatch = await bcrypt.compare(loginInput.password, user.password);
-
-      if (!isMatch) {
-        throw new Error("Invalid email or password");
-      }
-
-      const jwtToken = new JwtToken("somesecret");
-
-      const token = jwtToken.generateToken(user._id);
-
-      return { userId: user._id, token: token, tokenExpiration: 1 };
     },
   },
 };

@@ -2,6 +2,7 @@ import Review from "../../models/review.model";
 import Game from "../../models/game.model";
 import User from "../../models/user.model";
 import { IResolvers } from "graphql-tools";
+import { validateReviewInput } from "../../Utils/inputValidation";
 
 const reviewResolvers: IResolvers = {
   Mutation: {
@@ -10,6 +11,7 @@ const reviewResolvers: IResolvers = {
         if (!req.isAuth) {
           throw new Error("Unauthorized access. Please provide login.");
         }
+        validateReviewInput(reviewInput);
         const game = await Game.findById(reviewInput.gameId);
         const user = await User.findById(reviewInput.userId);
 
