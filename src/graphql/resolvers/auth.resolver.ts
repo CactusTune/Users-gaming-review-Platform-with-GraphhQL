@@ -7,12 +7,6 @@ import {
   validateLoginInput,
 } from "../../Utils/inputValidation";
 
-interface UserInput {
-  name: string;
-  email: string;
-  password: string;
-}
-
 const authResolvers: IResolvers = {
   Mutation: {
     createUser: async (_: any, { userInput }: any) => {

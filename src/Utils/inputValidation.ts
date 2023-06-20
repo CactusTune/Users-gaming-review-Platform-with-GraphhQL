@@ -1,5 +1,4 @@
 import joi from "joi";
-import { join } from "path";
 import { Types } from "mongoose";
 
 const userInputSchema = joi.object({

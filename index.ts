@@ -10,6 +10,7 @@ import { connectToMongo } from "./src/Utils/db";
 import { typeDefs } from "./src/graphql/typeDefs";
 import rootResolver from "./src/graphql/resolvers";
 import authenticateToken from "./src/middleware/isAuth";
+import limiter from "./src/Utils/rateLimit";
 import dotenv from "dotenv";
 
 async function bootstrap() {
@@ -18,6 +19,8 @@ async function bootstrap() {
   dotenv.config();
 
   app.use(authenticateToken);
+
+  app.use(limiter);
 
   const server = new ApolloServer({
     typeDefs,

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@envelop/rate-limiter": "^5.0.0",
     "apollo-graphql": "^0.9.7",
     "apollo-server-express": "^3.12.0",
     "bcrypt": "^5.1.0",
