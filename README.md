@@ -69,3 +69,8 @@ For initial setup, run the following command in the root of the project(you can 
 ```bash
     $ npm run start
  ```
+
+ ## Run resolvers unit Tests with Jest
+ ```bash
+    $ npm run test
+ ```
