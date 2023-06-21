@@ -4,8 +4,11 @@ import { validateGameInput } from "../../Utils/inputValidation";
 
 const gameResolvers: IResolvers<any, any> = {
   Mutation: {
-    createGame: async (_: any, { gameInput }: any) => {
+    createGame: async (_: any, { gameInput }: any, { req }: any) => {
       try {
+        if (!req.isAuth) {
+          throw new Error("Unauthorized access. Please provide login.");
+        }
         validateGameInput(gameInput);
         const existingGame = await Game.findOne({ title: gameInput.title });
         if (existingGame) {
