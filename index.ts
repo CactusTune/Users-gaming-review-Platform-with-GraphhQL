@@ -5,13 +5,11 @@ import express, {
   request,
   response,
 } from "express";
-import { ApolloServer } from "apollo-server-express";
 import { connectToMongo } from "./src/Utils/db";
-import { typeDefs } from "./src/graphql/typeDefs";
-import rootResolver from "./src/graphql/resolvers";
 import authenticateToken from "./src/middleware/isAuth";
 import limiter from "./src/Utils/rateLimit";
 import dotenv from "dotenv";
+import server from "./server";
 
 async function bootstrap() {
   const app = express();
@@ -22,11 +20,7 @@ async function bootstrap() {
 
   app.use(limiter);
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers: rootResolver,
-    context: ({ req }) => ({ req }),
-  });
+  server;
 
   await server.start();
 
