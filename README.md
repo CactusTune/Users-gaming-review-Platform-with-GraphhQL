@@ -43,7 +43,7 @@ For initial setup, run the following command in the root of the project(you can 
 
 ```bash
     $ docker build -t <image-name> .
-    $ docker run -d -p 5040:4040 --env-file .env <image-name>
+    $ docker run -d -p 5040:4040 <image-name>
 ```
 
 
