@@ -5,9 +5,9 @@ import express, {
   request,
   response,
 } from "express";
-import { connectToMongo } from "./src/Utils/db";
-import authenticateToken from "./src/middleware/isAuth";
-import limiter from "./src/Utils/rateLimit";
+import { connectToMongo } from "./Utils/db";
+import authenticateToken from "./middleware/isAuth";
+import limiter from "./Utils/rateLimit";
 import dotenv from "dotenv";
 import server from "./server";
 

@@ -1,4 +1,4 @@
-import server from "../server";
+import server from "../src/server";
 import { gql } from "apollo-server-express";
 
 it("should validate the user reviews", async () => {
