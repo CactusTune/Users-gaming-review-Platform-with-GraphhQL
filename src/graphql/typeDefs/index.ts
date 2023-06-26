@@ -62,7 +62,7 @@ export const typeDefs = gql`
   type Query {
     games: [Game!]!
     reviews: [Review!]!
-    user(loginInput: LoginInput): AuthData!
+    users: [User!]!
     login(loginInput: LoginInput): AuthData!
   }
 

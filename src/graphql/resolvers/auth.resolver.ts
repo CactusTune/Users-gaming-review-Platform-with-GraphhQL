@@ -34,13 +34,13 @@ const authResolvers: IResolvers = {
     },
   },
   Query: {
-    user: async (_: any, { userId }: any) => {
+    users: async (_: any) => {
       try {
-        const user = await User.findById(userId);
-        if (!user) {
+        const users = await User.find();
+        if (!users) {
           throw new Error("User not found.");
         }
-        return user;
+        return users;
       } catch (err) {
         throw err;
       }
